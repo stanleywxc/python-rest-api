@@ -1,0 +1,29 @@
+{
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "inferenceAccelerators": [],
+    "containerDefinitions": [
+        {
+            "name": "ecs-rest-api",
+            "image": "ecs-rest-api-repository:00000",
+            "resourceRequirements": null,
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": "8080",
+                    "protocol": "tcp"
+                }
+
+            ]
+        }
+    ],
+    "volumes": [],
+    "networkMode": "awsvpc",
+    "memory": "512",
+    "cpu": "256",
+    "executionRoleArn": "arn:aws:iam::737572620878:role/ecs-rest-api-execution-role",
+    "family": "ecs-rest-api-task-definition",
+    "taskRoleArn": "",
+    "placementConstraints": []
+}
