@@ -2,10 +2,10 @@
 
 from aws_cdk import core
 
-from deployments.rest_api_stack import EcsDevopsSandboxCdkStack
+from deployments.rest_api_stack import EcsRestAPICdkStack
 
 
 app = core.App()
-EcsDevopsSandboxCdkStack(app, "rest-api-stack")
+EcsRestAPICdkStack(app, "rest-api-stack")
 
 app.synth()

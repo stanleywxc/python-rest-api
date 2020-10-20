@@ -1,7 +1,7 @@
 """AWS CDK module to create ECS infrastructure"""
 from aws_cdk import (core, aws_ecs as ecs, aws_ecr as ecr, aws_ec2 as ec2, aws_iam as iam)
 
-class EcsDevopsSandboxCdkStack(core.Stack):
+class EcsRestAPICdkStack(core.Stack):
 
     def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)

@@ -7,4 +7,4 @@ phases:
     commands:
       - pip install -r requirements.txt
       - cd src
-      - python app_test.py
+      - python manage.py test
