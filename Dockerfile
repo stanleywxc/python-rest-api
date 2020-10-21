@@ -9,4 +9,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src ./
 
 # Run application
-CMD ["python", "manage.py run"]
+EXPOSE 9191
+ENTRYPOINT ["sh", "-c"]
+CMD ["python", "manage.py runserver -h 0.0.0.0 -p 9191"]

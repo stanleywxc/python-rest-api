@@ -47,7 +47,6 @@ class EcsRestAPICdkStack(core.Stack):
             "ecs-rest-api",
             image=ecs.ContainerImage.from_registry("rest-api")
         )
-
         """
         container = task_definition.add_container(
             "ecs-devops-sandbox",
