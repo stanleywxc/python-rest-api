@@ -2,10 +2,15 @@
 
 from flask_restx import Api
 from flask import Blueprint
+import logging
 
 from app.main.controller.user_controller import namespace as user_ns
 from app.main.controller.auth_controller import namespace as auth_ns
 from app.main.controller.health_controller import namespace as health_ns
+
+# Initialize Logger
+LOGGER = logging.getLogger()
+LOGGER.setLevel(logging.INFO)
 
 
 blueprint = Blueprint('api', __name__)
