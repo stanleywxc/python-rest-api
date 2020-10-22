@@ -42,7 +42,7 @@ class EcsRestAPICdkStack(core.Stack):
                                                     execution_role=execution_role,
                                                     family="ecs-rest-api-task-definition")
 
-
+        """
         container = task_definition.add_container(
             "ecs-rest-api",
             image=ecs.ContainerImage.from_registry("rest-api")
@@ -52,7 +52,7 @@ class EcsRestAPICdkStack(core.Stack):
             "ecs-devops-sandbox",
             image=ecs.ContainerImage.from_registry("amazon/amazon-ecs-sample")
         )
-        """
+
 
         # Create the ECS Service
         service = ecs.FargateService(self,
