@@ -71,7 +71,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: ecs-rest-api-repository
+        ECR_REPOSITORY: restapi-repository
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
@@ -93,6 +93,6 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: ecs-rest-api-service
-        cluster: ecs-rest-api-cluster
+        service: restapi-service
+        cluster: restapi-cluster
         wait-for-service-stability: true
