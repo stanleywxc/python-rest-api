@@ -12,10 +12,12 @@ class EcsRestAPICdkStack(core.Stack):
     def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        # Create the ECR Repository
+        """
+        # Create the ECR Repository only once
         ecr_repository = ecr.Repository(self,
                                         "restapi-repository",
                                         repository_name="restapi-repository")
+        """
 
         # Create the ECS Cluster (and VPC)
         vpc = ec2.Vpc(self,
@@ -60,7 +62,7 @@ class EcsRestAPICdkStack(core.Stack):
 
         # Add Port mapping to container
         container.add_port_mappings(ecs.PortMapping(container_port=9090, protocol=ecs.Protocol.TCP))
-        container.add_port_mappings(ecs.PortMapping(container_port=80, protocol=ecs.Protocol.TCP))
+        #container.add_port_mappings(ecs.PortMapping(container_port=80, protocol=ecs.Protocol.TCP))
 
         """
         # Create the ECS Service
