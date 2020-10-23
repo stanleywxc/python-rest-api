@@ -54,7 +54,7 @@ class EcsRestAPICdkStack(core.Stack):
                                                     family="restapi-task-definition")
 
         container = task_definition.add_container(
-            id="ecs-devops-sandbox",
+            id="restapi-container",
             image=ecs.ContainerImage.from_registry("amazon/amazon-ecs-sample")
         )
 
