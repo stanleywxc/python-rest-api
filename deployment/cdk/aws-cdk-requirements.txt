@@ -39,3 +39,4 @@ aws-cdk.custom-resources
 aws-cdk.cx-api
 aws-cdk.region-info
 aws-cdk.aws-ecs-patterns
+boto                         
