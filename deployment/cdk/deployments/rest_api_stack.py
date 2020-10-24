@@ -64,14 +64,14 @@ class EcsRestAPICdkStack(core.Stack):
         container.add_port_mappings(ecs.PortMapping(container_port=9090, protocol=ecs.Protocol.TCP))
         #container.add_port_mappings(ecs.PortMapping(container_port=80, protocol=ecs.Protocol.TCP))
 
-        """
+
         # Create the ECS Service
         service = ecs.FargateService(self,
                                      "restapi-service",
                                      cluster=cluster,
                                      task_definition=task_definition,
                                      service_name="restapi-service")
-        """
+        
         
         # Create NetworkLoadBalancer first
         loadbalancer = elbv2.NetworkLoadBalancer(self,
@@ -79,7 +79,8 @@ class EcsRestAPICdkStack(core.Stack):
                                                  cross_zone_enabled=True,
                                                  load_balancer_name="restapi-ecs-lb",
                                                  vpc=vpc,
-                                                 internet_facing=False
+                                                 internet_facing=False,
+                                                 
                                                  )
 
         # Create NetworkListener
@@ -89,6 +90,7 @@ class EcsRestAPICdkStack(core.Stack):
                                          port=9090,
                                          protocol=elbv2.Protocol.TCP
                                          )
+        """
 
         # Create the service
         service = ecs_patterns.NetworkLoadBalancedFargateService(self,
@@ -98,12 +100,32 @@ class EcsRestAPICdkStack(core.Stack):
                                         task_definition=task_definition,
                                         cluster=cluster,
                                         desired_count=2,
-                                        service_name="restapi-service",
-                                        load_balancer=loadbalancer)
+                                        listener_port=9090,
+                                        service_name="restapi-service")
+                                        #load_balancer=loadbalancer)
+        """
 
         # Create a HealthCheck
         health = elbv2.HealthCheck(enabled=True, path="/health/check", interval=5)
 
-        # Add the target group created automatically when creating the service to listener
-        listener.add_target_groups("restapi-ecs-lb-target-grp", service.target_group)
+        """
+        target_grp = elbv2.NetworkTargetGroup(self,
+                                              id="restapi-ecs-lb-target-grp",
+                                              port=9090,
+                                              health_check=health,
+                                              target_group_name="restapi-ecs-lb-target-grp",
+                                              protocol=elbv2.Protocol.TCP,
+                                              targets=[service.load_balancer_target(container_name="restapi-container",
+                                                                                    container_port=9090)]
+                                              )
+        """
 
+        listener.add_targets(id="restapi-ecs-lb-target-grp",
+                             targets=[service.load_balancer_target(container_name="restapi-container",
+                                     container_port=9090)],
+                             port=9090,
+                             #health_check=health,
+                             target_group_name="restapi-ecs-lb-target-grp"
+                             )
+        # Add the target group created automatically when creating the service to listener
+        #listener.add_target_groups("restapi-ecs-lb-target-grp", target_grp)
