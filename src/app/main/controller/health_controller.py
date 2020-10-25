@@ -1,5 +1,6 @@
 from flask_restx import Resource
 from app.main.util.dto import HealthDTO
+import socket
 
 namespace = HealthDTO.namespace
 
@@ -15,11 +16,16 @@ class HelloRestAPI(Resource):
 @namespace.route('/check')
 class HealthAPI(Resource):
 
+    __HOST_NAME = socket.gethostname()
+    __HOST_IP = socket.gethostbyname(__HOST_NAME)
+
     @namespace.doc('Health')
     def get(self):
 
         response = {
             'status': 200,
+            'host_name': HealthAPI.__HOST_NAME,
+            'host_ip': HealthAPI.__HOST_IP,
             'message': 'UP'
         }
         return response, 200

@@ -62,14 +62,13 @@ class EcsRestAPICdkStack(core.Stack):
 
         # Add Port mapping to container
         container.add_port_mappings(ecs.PortMapping(container_port=9090, protocol=ecs.Protocol.TCP))
-        #container.add_port_mappings(ecs.PortMapping(container_port=80, protocol=ecs.Protocol.TCP))
-
 
         # Create the ECS Service
         service = ecs.FargateService(self,
                                      "restapi-service",
                                      cluster=cluster,
                                      task_definition=task_definition,
+                                     desired_count=2,
                                      service_name="restapi-service")
 
         # Add security group to this service.
@@ -84,7 +83,7 @@ class EcsRestAPICdkStack(core.Stack):
                                                  cross_zone_enabled=True,
                                                  load_balancer_name="restapi-ecs-lb",
                                                  vpc=vpc,
-                                                 internet_facing=True
+                                                 internet_facing=False
                                                  )
 
         # Create NetworkListener
